@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,intial-scale=1.0">
+ <title>Dictionary</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@900&display=swap" rel="stylesheet">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mogra&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300&display=swap" rel="stylesheet">
+ <style>
+*
+{
+    margin:0px;
+    padding: 0px;
+  
+}
+#head
+{
+    height: 240px;
+    width:100%;
+    background-color: rgb(188, 137, 42);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 110px;
+    font-family: 'Londrina Solid', cursive;
+    justify-content: center;
+    align-items: center;
+
+}
+em
+{
+    font-size: 150px;
+    letter-spacing:10px;
+    word-spacing: 8px;
+    color: rgb(40, 34, 34);
+}
+#ig
+{
+    height: 95%;
+    width: 110px;
+}
+img
+{
+   height: 100%;
+   width: 100px;
+}
+#resultbox
+{
+    border: 2px solidb black;
+    display: flex;
+    justify-content: center;
+}
+#bg
+{
+height: 950px;
+width: 100%;
+position: absolute;
+}
+#nav
+{
+    height: 50px;
+    width: 100%;
+    background-color: rgb(60, 57, 57);
+}
+#box
+{
+    height: 800px;
+    width: 600px;
+    border: 8px solid black;
+    border-color:rgb(56, 55, 55);
+    border-radius: 18px;
+    position: absolute;
+    z-index: 1;
+    margin-top: 55px;
+    
+}
+legend
+{
+    text-align: center;
+    font-family: 'Mogra', cursive;
+    font-size: 50px;
+    color: white;
+}
+#inp
+{
+    height: 50px;
+    width: 500px;
+    color: black;
+    text-align: center;
+    margin-left: 50px;
+    margin-top:5%;
+    border-radius: 10px;
+    font-size: 28px;
+    font-family: 'Shantell Sans', cursive;
+}
+#sub
+{
+    height: 50px;
+    width: 150px;  
+    margin-left: 37%;
+    border-radius: 10px;
+    margin-top: 25px;
+    margin-bottom: 35px;
+    font-size: 22px;
+    font-family: 'Shantell Sans', cursive;
+}
+#res
+{
+  height:165px;
+  width: 100%;
+  background-color:pink;
+  font-size: 23px;
+  font-family: 'Shantell Sans', cursive;
+  text-align: center;
+  border: 3px;
+}
+#res1
+{
+  height:130px;
+  width: 100%;
+  background-color:pink;
+  font-size: 23px;
+  text-align: center;
+  font-family: 'Shantell Sans', cursive;
+}
+ #res2
+{
+  height:130px;
+  width: 100%;
+  background-color:pink;
+  font-size: 23px;
+  text-align: center;
+  font-family: 'Shantell Sans', cursive; 
+  border-radius: 3px;
+}
+h3
+{
+  font-size: 35px;
+  background-color: pink;
+  text-decoration: solid black 3px;
+  text-decoration-line:underline;
+  font-style: oblique;
+  border-top: 3px solid black;
+  color:darkslategray;
+}
+</style>
+
+</head>
+<body>
+ <div id="head">
+  <em>Words Genie..</em>
+  <div id="ig"><img src="./Genie-PNG-Photo.png" ></div>
+ </div>
+ <div id="nav">
+
+ </div>
+<div id="resultbox">
+  <img id="bg" src="./shutterstock_1042829308-1-1200x800.jpeg" alt="">
+  <fieldset id="box">
+    <legend>Spell Your Word</legend>
+    <input id="inp" type="text" placeholder="Enter Your Word" >
+    <button id="sub"  onclick="getDefinition()" >Submit</button>
+    <center><h3>Defination</h3></center>
+   <div id="res"></div>
+   <center><h3>Synonyms</h3></center>
+   <div id="res1"></div>
+   <center><h3>Antonyms</h3></center>
+   <div id="res2"></div>
+  </fieldset>
+</div>
+<script>
+    function getDefinition() 
+    {
+      const word = document.getElementById("inp").value;
+      fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+        .then(response => response.json())
+        .then(data => {
+          const definition = data[0].meanings[0].definitions[0].definition;
+          const Synonyms = data[0].meanings[0].synonyms[0];
+          const antonyms = data[0].meanings[0].antonyms[0];
+
+          document.getElementById("res").textContent = definition;
+          document.getElementById("res1").textContent = Synonyms;
+            document.getElementById("res2").textContent =antonyms;
+        })
+        .catch(error => {
+          console.error(error);
+          document.getElementById("res").textContent = "Error: Definition not found.";
+        });
+    }
+  </script>
+</body>
+</html>
