@@ -17,7 +17,6 @@
 {
     margin:0px;
     padding: 0px;
-  
 }
 #head
 {
@@ -51,13 +50,15 @@ img
 }
 #resultbox
 {
-    border: 2px solidb black;
     display: flex;
+    background-color:rgb(56, 55, 55);
+    height: auto;
+    width: auto;
     justify-content: center;
 }
 #bg
 {
-height: 950px;
+height: 1000px;
 width: 100%;
 position: absolute;
 }
@@ -69,9 +70,9 @@ position: absolute;
 }
 #box
 {
-    height: 850px;
-    width: 600px;
-    border: 10px solid black;
+    height: 910px;
+    width: 800px;
+    border: 8px solid black;
     border-color:rgb(56, 55, 55);
     border-radius: 18px;
     position: absolute;
@@ -92,7 +93,8 @@ legend
     width: 500px;
     color: black;
     text-align: center;
-    margin-left: 50px;
+    margin-left: 160px;
+    font-weight: 800;
     margin-top:5%;
     border-radius: 10px;
     font-size: 28px;
@@ -102,48 +104,69 @@ legend
 {
     height: 50px;
     width: 150px;  
-    margin-left: 37%;
+    margin-left: 40%;
     border-radius: 10px;
     margin-top: 25px;
+    font-weight: 800;
     margin-bottom: 35px;
     font-size: 22px;
     font-family: 'Shantell Sans', cursive;
 }
-#res
+#part
 {
-  height:220px;
-  width: 100%;
-  background-color:pink;
-  font-size: 23px;
+  height: 60px;
+  background-color: pink;
+  font-size: 20px;
+  font-weight: 800;
   font-family: 'Shantell Sans', cursive;
   text-align: center;
   border: 3px;
-  padding-top: 5px;
+}
+#res
+{
+  height:210px;
+  width: 100%;
+  background-color:pink;
+  font-weight: 800;
+  font-size: 20px;
+  font-family: 'Shantell Sans', cursive;
+  text-align: center;
+  border: 3px;
+}
+#ex
+{
+  height:70px;
+  width: 100%;
+  background-color:pink;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+  font-family: 'Shantell Sans', cursive;
 }
 #res1
 {
-  height:125px;
+  height:80px;
   width: 100%;
   background-color:pink;
-  font-size: 23px;
+  font-size: 20px;
+  font-weight: 800;
   text-align: center;
   font-family: 'Shantell Sans', cursive;
-  padding-top: 3px;
 }
  #res2
 {
-  height:125px;
+  height:80px;
   width: 100%;
   background-color:pink;
-  font-size: 23px;
+  font-size: 20px;
+  font-weight: 800;
   text-align: center;
   font-family: 'Shantell Sans', cursive; 
   border-radius: 3px;
-  padding-top: 3px;
 }
 h3
 {
-  font-size: 35px;
+  font-size: 25px;
   background-color: pink;
   text-decoration: solid black 3px;
   text-decoration-line:underline;
@@ -167,14 +190,19 @@ h3
   <fieldset id="box">
     <legend>Spell Your Word</legend>
     <input id="inp" type="text" placeholder="Enter Your Word" >
-    <button id="sub"  onclick="getDefinition()" >Submit</button>
+    <button id="sub" type="submit" onclick="getDefinition()" >Submit</button>
+    <center><h3>Part Of Speech</h3></center>
+    <div id="part"></div>
     <center><h3>Defination</h3></center>
    <div id="res"></div>
+   <center><h3>Example</h3></center>
+   <div id="ex"></div>
    <center><h3>Synonyms</h3></center>
    <div id="res1"></div>
    <center><h3>Antonyms</h3></center>
    <div id="res2"></div>
   </fieldset>
+  
 </div>
 <script>
     function getDefinition() 
@@ -183,13 +211,17 @@ h3
       fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
         .then(response => response.json())
         .then(data => {
-          const definition = data[0].meanings[0].definitions[0].definition;
+          const definition = data[0].meanings[0].partOfSpeech;
+          const definition1 = data[0].meanings[0].definitions[0].definition;
+          const Example = data[0].meanings[0].definitions[0].example;
           const Synonyms = data[0].meanings[0].synonyms[0];
           const antonyms = data[0].meanings[0].antonyms[0];
 
-          document.getElementById("res").textContent = definition;
+          document.getElementById("part").textContent = definition;
+          document.getElementById("res").textContent = definition1;
+          document.getElementById("ex").textContent = Example;
           document.getElementById("res1").textContent = Synonyms;
-            document.getElementById("res2").textContent =antonyms;
+          document.getElementById("res2").textContent =antonyms;
         })
         .catch(error => {
           console.error(error);
