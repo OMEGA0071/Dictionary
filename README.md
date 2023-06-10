@@ -14,3 +14,8 @@ and responsive interface.
 * Antonyms
 * Synonyms
 
+## Preview [Click Here](https://omega0071.github.io/Dictionary/)
+
+<img src="/Screenshot.png" width="800" />
+
+
